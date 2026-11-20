@@ -1,0 +1,16 @@
+version: '3.8'
+
+services:
+  agent:
+    build:
+      context: ./agent
+      dockerfile: Dockerfile
+    container_name: piwatch-agent
+    restart: unless-stopped
+    volumes:
+      # Accesso al Docker daemon dell'host (per monitorare i container)
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      # Temperatura CPU del Raspberry
+      - /sys:/sys:ro
+      # Log di sistema (auth.log per SSH)
+      - /var/log:/var/log:ro
