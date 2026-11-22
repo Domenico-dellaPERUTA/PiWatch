@@ -1,0 +1,46 @@
+# N.B.: installa "REST Client" plugin in VSCode per eseguire le richieste HTTP direttamente dal file
+@baseUrl = http://localhost:8080
+
+### 1. Test invio metriche dall'Agent (POST)
+POST {{baseUrl}}/api/v1/metrics
+Content-Type: application/json
+
+{
+  "timestamp": "2026-11-22 15:30:00",
+  "os": "Linux 6.12.67-linuxkit",
+  "cpu": {
+    "cores": "12 cores",
+    "usage": "5.2%"
+  },
+  "ram": {
+    "total": "7.65 GB",
+    "used": "10.5%",
+    "available": "6.85 GB"
+  },
+  "disk": {
+    "total": "452.13 GB",
+    "used": "5.5%",
+    "free": "427.25 GB"
+  },
+  "docker": {
+    "version": "29.2.0",
+    "containers": 1,
+    "containerList": [
+      {
+        "id": "abc123def456",
+        "name": "piwatch-agent",
+        "status": "running"
+      }
+    ]
+  },
+  "ssh": {
+    "events": {
+      "error": "auth.log non trovato"
+    },
+    "total": 0
+  }
+}
+
+### 2. (Opzionale) Test di base per vedere se il server risponde
+GET {{baseUrl}}/actuator/health
+# Nota: funzionerà quando aggiungeremo spring-boot-starter-actuator

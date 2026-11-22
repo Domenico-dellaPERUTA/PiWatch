@@ -46,13 +46,25 @@ piwatch/
 │   ├── Dockerfile
 │   ├── pom.xml
 │   └── src/
-│       ├── main/java/.../
-│       │   ├── controller/
-│       │   ├── service/
-│       │   ├── repository/
-│       │   └── security/  # JWT
-│       └── main/resources/
-│           └── application.yml
+│       src/
+│       └── main/
+│           ├── java/
+│           │   └── it/
+│           │       └── quasar_x7/
+│           │           └── backend/
+│           │               ├── BackendApplication.java      
+│           │               ├── dto/                         
+│           │               │   ├── CpuDto.java
+│           │               │   ├── RamDto.java
+│           │               │   ├── DiskDto.java
+│           │               │   ├── ContainerDto.java
+│           │               │   ├── DockerDto.java
+│           │               │   ├── SshDto.java
+│           │               │   └── MetricsDto.java
+│           │               └── controller/                  
+│           │                   └── MetricsController.java
+│           └── resources/
+│               └── application.properties                   
 │
 ├── frontend/         # React
 │   ├── Dockerfile
