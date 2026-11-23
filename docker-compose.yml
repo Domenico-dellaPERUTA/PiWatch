@@ -1,6 +1,21 @@
 version: '3.8'
 
 services:
+  # --- DATABASE ---
+  postgres:
+    image: postgres:15-alpine
+    container_name: piwatch-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: piwatch
+      POSTGRES_USER: "${USER_DB}"
+      POSTGRES_PASSWORD: "${PASS_DB}"
+    ports:
+      - "5433:5432" # porta modificata per evitare conflitti con eventuali istanze PostgreSQL locali
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+ # --- AGENT PYTHON ---
   agent:
     build:
       context: ./agent
@@ -14,3 +29,8 @@ services:
       - /sys:/sys:ro
       # Log di sistema (auth.log per SSH)
       - /var/log:/var/log:ro
+
+# --- DICHIARAZIONE VOLUMI ---
+# Necessario per dire a Docker di creare e gestire questo volume persistente
+volumes:
+  postgres_data:

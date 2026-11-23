@@ -27,17 +27,17 @@ def get_system_metrics():
 
     info = {
         "timestamp": now(),
-        "OS": f"{platform.system()} {platform.release()}",
-        "CPU": { 
+        "os": f"{platform.system()} {platform.release()}",
+        "cpu": { 
             "cores": f"{psutil.cpu_count(logical=True)} cores",
             "usage": f"{psutil.cpu_percent(interval=1)}%"
         },
-        "RAM": { 
+        "ram": { 
             "total": f"{tot_ram} GB",
             "used": f"{round((tot_ram - free_ram) / tot_ram * 100, 2)}%",
             "available": f"{free_ram} GB"
         },
-        "Disk": {
+        "disk": {
             "total": f"{tot_disk} GB",
             "used": f"{round((tot_disk - free_disk) / tot_disk * 100, 2)}%",
             "free": f"{free_disk} GB"

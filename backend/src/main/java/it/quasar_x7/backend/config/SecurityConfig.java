@@ -1,3 +1,4 @@
+// backend/src/main/java/it/quasar_x7/backend/config/SecurityConfig.java
 package it.quasar_x7.backend.config;
 
 import org.springframework.context.annotation.Bean;

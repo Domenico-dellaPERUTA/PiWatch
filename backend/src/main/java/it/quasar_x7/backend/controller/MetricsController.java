@@ -1,3 +1,4 @@
+// backend/src/main/java/it/quasar_x7/backend/controller/MetricsController.java
 package it.quasar_x7.backend.controller;
 
 import it.quasar_x7.backend.dto.MetricsDto;
@@ -5,6 +6,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import it.quasar_x7.backend.service.*;
 
 @RestController
 @RequestMapping("/api/v1/metrics")
@@ -12,19 +14,17 @@ import org.springframework.web.bind.annotation.*;
 public class MetricsController {
 
     private static final Logger log = LoggerFactory.getLogger(MetricsController.class);
+    
+    private final MetricsService service;
+
+    public MetricsController(MetricsService service) {
+        this.service = service;
+    }
 
     @PostMapping
     public ResponseEntity<String> receiveMetrics(@RequestBody MetricsDto metrics) {
-        log.info("✅ Metriche ricevute dal Raspberry Pi!");
-        log.info("   Timestamp: {}", metrics.timestamp());
-        log.info("   OS: {}", metrics.os());
-        log.info("   CPU Usage: {}", metrics.cpu().usage());
-        log.info("   RAM Available: {}", metrics.ram().available());
-        log.info("   Docker Containers: {}", metrics.docker().containers());
-        
-        // TODO: Qui in futuro chiameremo il Service per salvare su PostgreSQL
-        
-        return ResponseEntity.ok("Metriche ricevute e processate con successo");
-        // In produzione, restituiremmo un 201 Created o un DTO di risposta
+        log.info("Ricevute metriche dal Raspberry Pi, timestamp={}", metrics.timestamp());
+        var saved = service.save(metrics);
+        return ResponseEntity.status(201).body("Metriche salvate, id=" + saved.getId());
     }
 }
